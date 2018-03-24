@@ -42,6 +42,10 @@ defmodule KatoMarika.Commands.Base do
       |> Enum.map(fn(x)->String.to_integer(x)end)
 
 
+    s1 = if nbDice>1 do "s" else "" end
+    s2 = if face>1 do "s" else "" end
+    {:ok,newMessage}=Client.send_message(message.channel_id, "Je lance **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n *Compte les résultats*")
+
     tasks=for _ <- 1..nbDice do
      Task.async(fn->:rand.uniform(face)end)
     end
@@ -50,14 +54,15 @@ defmodule KatoMarika.Commands.Base do
       elem(res,1)
     end)
     total = Enum.reduce(tasks_with_results, fn(x, acc)-> x+acc end)
-
+    max_size = 1800-byte_size(Integer.to_string(total))
     results = Enum.join(tasks_with_results, ", ")
-    s1 = if nbDice>1 do "s" else "" end
-    s2 = if face>1 do "s" else "" end
+    results = if (byte_size(results)>1800) do String.slice(results,0..max_size)<>"..." else results end
+
+
     total = if nbDice>1 do "Ce qui me fait un total de **#{total}**" else "" end
-    Cogs.say "J'ai lancé **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n"
+    Client.edit_message(newMessage,"J'ai lancé **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n"
       <> "J'obtiens le#{s1} résultat#{s1} suivant#{s1} : **#{results}**\n"
-      <> total
+      <> total)
   end
 
   @doc """
