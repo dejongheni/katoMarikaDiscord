@@ -41,14 +41,20 @@ defmodule KatoMarika.Commands.Base do
     [nbDice, face]=String.split(String.downcase(dices), "d")
       |> Enum.map(fn(x)->String.to_integer(x)end)
 
+    {nbDice,error} = if nbDice > 1000000000 do
+      {1000000000,"Je n'ai pas autant de dés sur moi, je n'en ai que 1000000000 :(\n"}
+    else
+      {nbDice,""}
+    end
 
     s1 = if nbDice>1 do "s" else "" end
     s2 = if face>1 do "s" else "" end
-    {:ok,newMessage}=Client.send_message(message.channel_id, "Je lance **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n *Compte les résultats*")
+    {:ok,newMessage}=Client.send_message(message.channel_id, "#{error}Je lance **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n *je compte les résultats*")
 
     tasks=for _ <- 1..nbDice do
      Task.async(fn->:rand.uniform(face)end)
     end
+
     tasks_with_results = Task.yield_many(tasks, 50000000)
     tasks_with_results = Enum.map(tasks_with_results, fn {_,res} ->
       elem(res,1)
