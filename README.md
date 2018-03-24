@@ -28,3 +28,4 @@ mix run --no-halt
 add to your server : https://discordapp.com/oauth2/authorize?&client_id=426055346079924234&scope=bot&permissions=0
 
 Run with ```mix run --no-halt```
+Run in background with ```elixir --detached -S mix run --no-halt```
