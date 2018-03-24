@@ -30,4 +30,7 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :katomarikadiscord,
-  key: "yourKeyHere"
+  key: "yourKeyHere",
+  commander: "245967982080163841", #change with your ID if you want
+  botID: "426055346079924234", #change with your bot ID
+  pinoID: "403203900909289474"

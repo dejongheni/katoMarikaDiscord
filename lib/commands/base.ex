@@ -6,7 +6,7 @@ defmodule KatoMarika.Commands.Base do
   alias KatoMarika.Util.Time
 
   @doc """
-  : affiche la latence
+  : Affiche la latence
   """
   Cogs.def ping do
     # message is an implicit parameter to commands
@@ -16,16 +16,16 @@ defmodule KatoMarika.Commands.Base do
     Client.edit_message(task, task.content <> "\nIl y a une latence de #{time} ms")
   end
 
-  @doc """
-  <prefixe> : set le prefixe des commandes à *prefixe*
-  """
-  Cogs.def prefixe(prefixe) do
-    Cogs.set_prefix(prefixe)
-    Cogs.say "Le nouveau préfixe est "<>prefixe
-  end
+  # @doc """
+  # <prefixe> : set le prefixe des commandes à *prefixe*
+  # """
+  # Cogs.def prefixe(prefixe) do
+  #   Cogs.set_prefix(prefixe)
+  #   Cogs.say "Le nouveau préfixe est "<>prefixe
+  # end
 
   @doc """
-  <phrase> : renvois *phrase*
+  <phrase> : Renvois *phrase*
   """
   Cogs.def echo do
     String.split(message.content)
@@ -48,7 +48,17 @@ defmodule KatoMarika.Commands.Base do
     |> Embed.send
   end
 
-  Cogs.def find(name) do
-
+  @doc """
+  : Des informations sur moi
+  """
+  Cogs.def info do
+    {:ok, user}=Client.get_user("@me")
+    %Embed{}
+    |> title("Infos")
+    |> description("Je suis KatoMarika, la capitaine du vaisseau Pirate Bentenmaru !\n\n"
+        <>"Retrouve moi ici : https://github.com/kornakh/katomarikadiscord")
+    |> thumbnail(User.avatar_url(user))
+    |> Embed.send
   end
+
 end
