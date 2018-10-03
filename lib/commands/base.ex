@@ -24,15 +24,15 @@ defmodule KatoMarika.Commands.Base do
   #   Cogs.say "Le nouveau préfixe est "<>prefixe
   # end
 
-  @doc """
-  <phrase> : Renvois *phrase*
-  """
-  Cogs.def echo do
-    String.split(message.content)
-      |> tl
-      |> Enum.join(" ")
-      |> Cogs.say
-  end
+  # @doc """
+  # <phrase> : Renvois *phrase*
+  # """
+  # Cogs.def echo do
+  #   String.split(message.content)
+  #     |> tl
+  #     |> Enum.join(" ")
+  #     |> Cogs.say
+  # end
 
   @doc """
   <*x*d*y*> : je lance *x* dés à *y* faces
@@ -41,7 +41,7 @@ defmodule KatoMarika.Commands.Base do
     [nbDice, face]=String.split(String.downcase(dices), "d")
       |> Enum.map(fn(x)->String.to_integer(x)end)
 
-    {nbDice,error} = if nbDice > 1000000000 do
+    {nbDice,error} = if nbDice > 10000000 do
       {1000000000,"Je n'ai pas autant de dés sur moi, je n'en ai que 1000000000 :(\n"}
     else
       {nbDice,""}
