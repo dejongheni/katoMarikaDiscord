@@ -72,13 +72,16 @@ defmodule KatoMarika.Commands.Base do
   : Affiche l'aide
   """
   Cogs.def help do
-    doc = Code.get_docs(KatoMarika.Commands.Base, :docs) |> tl |> Enum.sort_by(&(elem(&1,0)))
-    |> Enum.map(fn(x) -> Atom.to_string(elem(elem(x,0),0)) <>" "<> (case elem(x,4) do nil -> ""; x -> x end) end)
-    |> Enum.reduce(fn(x,acc) -> acc <> "\n" <> x end)
+    {_,_,_,_,_,_,docs} = Code.fetch_docs(KatoMarika.Commands.Base)
+    doc = docs
+    |> Enum.map(fn(x) ->
+            Atom.to_string(elem(elem(x,0),1)) <>" "<> (case elem(x,3) do %{"en"=>value}->value;:none->"" end) end)
+    |> Enum.drop(-1)
+    |> Enum.join
     %Embed{}
+    |> thumbnail("https://i.imgur.com/Qe4ZbwY.png")
     |> title("Documentation")
     |> description(doc)
-    |> thumbnail("https://i.imgur.com/Qe4ZbwY.png")
     |> Embed.send
   end
 
@@ -89,7 +92,7 @@ defmodule KatoMarika.Commands.Base do
     {:ok, user}=Client.get_user("@me")
     %Embed{}
     |> title("Infos")
-    |> description("Je suis KatoMarika, la capitaine du vaisseau Pirate Bentenmaru !\n\n"
+    |> description("Je suis Kato Marika, la capitaine du vaisseau Pirate Bentenmaru !\n\n"
         <>"Retrouve moi ici : https://github.com/kornakh/katomarikadiscord")
     |> thumbnail(User.avatar_url(user))
     |> Embed.send
