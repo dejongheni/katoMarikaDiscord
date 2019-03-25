@@ -69,6 +69,17 @@ defmodule KatoMarika.Commands.Base do
   end
 
   @doc """
+    <event> : je créer un evenemement et supprime le message du demandeur
+  """
+  Cogs.def event(event_name) do
+    Client.delete_message({message.channel_id, message.id})
+    {:ok, newMessage} = Client.send_message(message.channel_id,  String.split(message.content) |> tl |> Enum.join(" "))
+    Client.add_reaction(newMessage, "\u2B55") #emoji rond
+    Client.add_reaction(newMessage, "\u274C") #emoji rond
+    Client.add_reaction(newMessage, "\u2753") #emoji rond
+  end
+
+  @doc """
   : Affiche l'aide
   """
   Cogs.def help do
