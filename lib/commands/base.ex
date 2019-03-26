@@ -69,7 +69,7 @@ defmodule KatoMarika.Commands.Base do
   end
 
   @doc """
-    <event> : je créer un evenemement et supprime le message du demandeur
+    <event> : je créer un evenement et supprime le message du demandeur
   """
   Cogs.def event(event_name) do
     Client.delete_message({message.channel_id, message.id})
