@@ -29,8 +29,11 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
+config :nostrum,
+  token: "yourKeyHere", # The token of your bot as a string
+  num_shards: 2 # The number of shards you want to run your bot under, or :auto.
+
 config :katomarikadiscord,
-  key: "yourKeyHere",
   commander: "245967982080163841", #change with your ID if you want
   botID: "426055346079924234", #change with your bot ID
   pinoID: "403203900909289474"

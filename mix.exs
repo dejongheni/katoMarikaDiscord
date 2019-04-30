@@ -20,6 +20,6 @@ defmodule Katomarikadiscord.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    [{:alchemy, "~> 0.6.0", hex: :discord_alchemy}]
+    [{:nostrum, git: "https://github.com/Kraigie/nostrum.git"}]
   end
 end
