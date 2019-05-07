@@ -34,6 +34,7 @@ config :nostrum,
   num_shards: 2 # The number of shards you want to run your bot under, or :auto.
 
 config :katomarikadiscord,
+  prefix: ".",
   commander: "245967982080163841", #change with your ID if you want
   botID: "426055346079924234", #change with your bot ID
   pinoID: "403203900909289474"

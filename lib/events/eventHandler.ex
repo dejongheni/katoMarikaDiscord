@@ -1,5 +1,5 @@
 defmodule KatoMarika.Events.EventHandler do
-  use Alchemy.Events
+
   alias KatoMarika.Events.PinoHandler
   # alias Alchemy.{Client, Cache, User, Embed, Webhook}
   # import Embed

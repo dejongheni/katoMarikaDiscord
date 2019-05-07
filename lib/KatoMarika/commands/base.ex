@@ -1,9 +1,12 @@
 defmodule KatoMarika.Commands.Base do
-  use Alchemy.Cogs
-  use Alchemy.Events
-  alias Alchemy.{Client, Cache, User, Embed, Webhook}
-  import Embed
+  alias Nostrum.Api
+  
   alias KatoMarika.Util.Time
+  
+  import Nostrum.Struct.Embed
+
+  require Logger
+  
 
   @doc """
   : Affiche la latence
