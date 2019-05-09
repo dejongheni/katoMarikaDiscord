@@ -22,17 +22,10 @@ defmodule KatoMarika.Command do
   def execute(["event", content], msg) do
     Base.event(msg, content)
   end
-  # def execute(["h", term], msg) do
-  #   Util.help(msg, term)
-  # end
 
-  # def execute(["i", to_inspect], msg) do
-  #   if msg.author.id == @owner_id, do: Util.inspect(msg, to_inspect)
-  # end
-
-  # def execute(["e", to_eval], msg) do
-  #   if msg.author.id == @owner_id, do: Util.eval(msg, to_eval)
-  # end
+  def execute(["help"], msg) do
+    Base.help(msg)
+  end
 
   def execute(_any, _msg) do
     :noop

@@ -8,7 +8,6 @@ defmodule KatoMarika.Consumer do
   end
 
   def handle_event({:MESSAGE_CREATE, {msg}, _ws_state}) do
-    IO.inspect(msg)
     Command.handle(msg)
   end
 
