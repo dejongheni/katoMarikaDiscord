@@ -25,3 +25,4 @@ katomarikadiscord-*.tar
 
 #ignore config file (to avoid key leaking)
 /config/config.exs
+.DS_STORE
