@@ -21,6 +21,9 @@ defmodule Katomarikadiscord.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    [{:nostrum, git: "https://github.com/Kraigie/nostrum.git"}]
+    [
+      {:nostrum, git: "https://github.com/Kraigie/nostrum.git"},
+      {:distillery, "~> 2.0"}
+    ]
   end
 end
