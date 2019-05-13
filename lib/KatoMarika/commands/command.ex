@@ -27,6 +27,13 @@ defmodule KatoMarika.Command do
     Base.help(msg)
   end
 
+  def execute(["info"], msg) do
+    Base.info(msg)
+  end
+
+  def execute(["roll", content], msg) do
+    Base.roll(msg, content)
+  end
   def execute(_any, _msg) do
     :noop
   end

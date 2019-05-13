@@ -60,39 +60,39 @@ defmodule KatoMarika.Commands.Base do
   end
 
 
-  # @doc """
-  # <*x*d*y*> : je lance *x* dés à *y* faces
-  # """
-  # Cogs.def roll(dices\\"1d20") do
-  #   [nbDice, face]=String.split(String.downcase(dices), "d")
-  #     |> Enum.map(fn(x)->String.to_integer(x)end)
+  @doc """
+  <*x*d*y*> : je lance *x* dés à *y* faces
+  """
+  def roll(msg, dices\\"1d20") do
+    [nbDice, face]=String.split(String.downcase(dices), "d")
+      |> Enum.map(fn(x)->String.to_integer(x)end)
 
-  #   {nbDice,error} = if nbDice > 10000000 do
-  #     {1000000000,"Je n'ai pas autant de dés sur moi, je n'en ai que 1000000000 :(\n"}
-  #   else
-  #     {nbDice,""}
-  #   end
+    {nbDice,error} = if nbDice > 10000000 do
+      {1000000000,"Je n'ai pas autant de dés sur moi, je n'en ai que 1000000000 :(\n"}
+    else
+      {nbDice,""}
+    end
 
-  #   s1 = if nbDice>1 do "s" else "" end
-  #   s2 = if face>1 do "s" else "" end
-  #   {:ok,newMessage}=Client.send_message(message.channel_id, "#{error}Je lance **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n *je compte les résultats*")
-
-
-  #   task=Task.async(fn->Enum.map(1..nbDice,fn(_)->:rand.uniform(face)end)end)
+    s1 = if nbDice>1 do "s" else "" end
+    s2 = if face>1 do "s" else "" end
+    {:ok,newMessage}=Api.create_message(msg.channel_id, "#{error}Je lance **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n *je compte les résultats*")
 
 
-  #   tasks_with_results = Task.yield(task, 50000000) |> elem(1)
-  #   total = Enum.reduce(tasks_with_results, fn(x, acc)-> x+acc end)
-  #   max_size = 1800-byte_size(Integer.to_string(total))
-  #   results = Enum.join(tasks_with_results, ", ")
-  #   results = if (byte_size(results)>1800) do String.slice(results,0..max_size)<>"..." else results end
+    task=Task.async(fn->Enum.map(1..nbDice,fn(_)->:rand.uniform(face)end)end)
 
 
-  #   total = if nbDice>1 do "Ce qui me fait un total de **#{total}**" else "" end
-  #   Client.edit_message(newMessage,"J'ai lancé **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n"
-  #     <> "J'obtiens le#{s1} résultat#{s1} suivant#{s1} : **#{results}**\n"
-  #     <> total)
-  # end
+    tasks_with_results = Task.yield(task, 50000000) |> elem(1)
+    total = Enum.reduce(tasks_with_results, fn(x, acc)-> x+acc end)
+    max_size = 1800-byte_size(Integer.to_string(total))
+    results = Enum.join(tasks_with_results, ", ")
+    results = if (byte_size(results)>1800) do String.slice(results,0..max_size)<>"..." else results end
+
+
+    total = if nbDice>1 do "Ce qui me fait un total de **#{total}**" else "" end
+    Api.edit_message(newMessage, content: "J'ai lancé **#{nbDice}** dé#{s1} à **#{face}** face#{s2}\n"
+      <> "J'obtiens le#{s1} résultat#{s1} suivant#{s1} : **#{results}**\n"
+      <> total)
+  end
 
 
 end
