@@ -34,6 +34,7 @@ defmodule KatoMarika.Command do
   def execute(["roll", content], msg) do
     Base.roll(msg, content)
   end
+
   def execute(_any, _msg) do
     :noop
   end
