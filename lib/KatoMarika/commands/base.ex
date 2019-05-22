@@ -71,7 +71,7 @@ defmodule KatoMarika.Commands.Base do
     {_,_,_,_,_,_,docs} = Code.fetch_docs(KatoMarika.Commands.Base)
     doc = docs
     |> Enum.map(fn(x) ->
-            Atom.to_string(elem(elem(x,0),1)) <>" "<> (case elem(x,3) do %{"en"=>value}->value;:none->"" end) end)
+            Atom.to_string((case elem(x,3) do %{"en"=>value}-> elem(elem(x,0),1) <>" "<> value; end)) end)
     |> Enum.join
     embed =
       %Nostrum.Struct.Embed{}
@@ -96,7 +96,7 @@ defmodule KatoMarika.Commands.Base do
   end
 
 
-
+  @doc false
   def delete(msg, content) do
     [nb_message, message_id] = String.split(content, " ")
     Api.delete_message(msg)
