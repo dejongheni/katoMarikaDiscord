@@ -69,10 +69,15 @@ defmodule KatoMarika.Commands.Base do
   """
   def help(msg) do
     {_,_,_,_,_,_,docs} = Code.fetch_docs(KatoMarika.Commands.Base)
-    doc = docs
-    |> Enum.map(fn(x) ->
-            Atom.to_string((case elem(x,3) do %{"en"=>value}-> elem(elem(x,0),1) <>" "<> value; end)) end)
-    |> Enum.join
+    doc =
+      docs
+      |> Enum.map(fn(x) ->
+          case elem(x,3) do
+            %{"en"=>value} -> Atom.to_string(elem(elem(x,0),1)) <>" "<> value
+            _ -> ""
+          end
+        end)
+      |> Enum.join
     embed =
       %Nostrum.Struct.Embed{}
       |> put_title("Documentation")
