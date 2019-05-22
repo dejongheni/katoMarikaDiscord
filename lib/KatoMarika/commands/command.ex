@@ -35,6 +35,10 @@ defmodule KatoMarika.Command do
     Base.roll(msg, content)
   end
 
+  def execute(["delete", content], msg) do
+    Base.delete(msg, content)
+  end
+
   def execute(_any, _msg) do
     :noop
   end

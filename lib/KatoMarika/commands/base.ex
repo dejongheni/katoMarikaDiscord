@@ -96,4 +96,18 @@ defmodule KatoMarika.Commands.Base do
   end
 
 
+
+  def delete(msg, content) do
+    [nb_message, message_id] = String.split(content, " ")
+    Api.delete_message(msg)
+    case String.to_integer(nb_message) do
+      1 -> Api.delete_message(msg.channel_id, String.to_integer(message_id))
+      nb_message when nb_message > 1 ->
+           messages_to_delete =
+            Api.get_channel_messages!(msg.channel_id, nb_message - 1, {:after, message_id})
+            |> Enum.map(fn message -> message.id end)
+            |> List.insert_at(0, String.to_integer(message_id))
+           Api.bulk_delete_messages!(msg.channel_id, messages_to_delete)
+    end
+  end
 end
